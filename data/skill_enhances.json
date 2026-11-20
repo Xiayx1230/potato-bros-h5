@@ -1,0 +1,213 @@
+{
+  "_说明": {
+    "用途": "技能强化参数表。upgrades 里 skillEnhance 填本表 id，具体数值在此配置。",
+    "字段": {
+      "id": "强化ID，与 upgrades.skillEnhance 对应",
+      "name": "备注名（可选）",
+      "desc": "备注说明（可选）",
+      "buffDmgBonusAdd": "燃血额外伤害率",
+      "burnCurrentPct": "燃血每秒扣当前生命",
+      "healLostPct": "燃血每秒回已损生命",
+      "damageMulScale": "技能倍率乘数",
+      "rangeScale": "范围乘数",
+      "replayCount": "额外连放次数",
+      "rootDotAtkRatio": "定身每秒伤害=攻×比例（多条强化加算）",
+      "rootDurationSet": "久定定身秒数",
+      "noRoot": "破定1=取消定身",
+      "infiniteDuration": "永燃：1=Buff无限持续",
+      "dmgBonusFactor": "永燃：伤害率加成只生效该比例（如0.6=+30%变+18%）",
+      "healTakenMul": "永燃：治疗倍率（如0.5=回血减半）",
+      "buffDmgBonusMul": "暴血：伤害率乘数",
+      "hpCostCurrentPct": "暴血：消耗当前生命比例",
+      "lastStandDmgPerLost10": "背水：每损失一步生命加伤害率",
+      "lastStandHpStep": "背水：生命损失步长(如0.1=10%)",
+      "chainChance": "连斩：再斩概率0~1",
+      "healPerHit": "嗜血：每命中回血",
+      "arcDegrees": "半月斩：扇形总角度",
+      "rangeMul": "半月斩：攻击距离倍数(相对原技能)",
+      "moveInterval": "蓄力一击：释放后冷却秒",
+      "maxChargeTime": "蓄力一击：满蓄秒数",
+      "maxChargeMul": "蓄力一击：满蓄伤害/范围倍数",
+      "widthScale": "神灭：定神斩宽度乘数",
+      "chainChanceBuff": "暴血连斩：血光期间连斩概率",
+      "chainHpCost": "暴血连斩：每次连斩扣血",
+      "chainStopHpPct": "暴血连斩：低于该生命比例停止",
+      "damageMul": "剑气：相对普攻的伤害倍率",
+      "speed": "剑气：飞行速度（像素/秒）",
+      "sizeMul": "剑气：碰撞/体型相对玩家直径的倍率（1=直径）",
+      "splashMul": "剑气：命中后溅射半径相对玩家直径（1=直径）",
+      "splashDamageMul": "剑气：溅射伤害相对本次剑气伤害倍率（1=同伤）",
+      "radius": "（旧）固定碰撞半径；优先用 sizeMul×玩家直径",
+      "color": "剑气：弹道颜色",
+      "splitCount": "剑气·分裂：分裂数量",
+      "splitDamageMul": "剑气·分裂：小剑气相对大剑气伤害倍率",
+      "splitSpreadDeg": "剑气·分裂：扇形半角（度）",
+      "splitSpeed": "剑气·分裂：小剑气速度",
+      "splitSizeMul": "剑气·分裂：小剑气体型相对玩家直径",
+      "splitRadius": "（旧）小剑气固定半径",
+      "pierce": "剑气·穿透：1=命中不消失，出视野销毁"
+    }
+  },
+  "enhances": [
+    {
+      "id": "xue_guang_burn",
+      "name": "血光四溅·燃血重生",
+      "desc": "伤害率额外+20%；持续期间每秒 -当前6%生命，并 +已损4%生命",
+      "buffDmgBonusAdd": 0.2,
+      "burnCurrentPct": 0.06,
+      "healLostPct": 0.04
+    },
+    {
+      "id": "ding_shen_focus",
+      "name": "定神斩·一剑定神",
+      "desc": "定神斩技能倍率+50%，范围扩大到原来的两倍",
+      "damageMulScale": 1.5,
+      "rangeScale": 2
+    },
+    {
+      "id": "ding_shen_dot",
+      "name": "定神斩·神伤",
+      "desc": "被定身的怪物每秒受到50%角色攻击力的伤害。与剑气·分裂组成「神伤散射」后：定神斩停用，改由分裂剑气定身并触发本效果",
+      "rootDotAtkRatio": 0.5
+    },
+    {
+      "id": "ding_shen_long_root",
+      "name": "定神斩·久定",
+      "desc": "定神斩的定身效果延长至5秒",
+      "rootDurationSet": 5
+    },
+    {
+      "id": "ding_shen_break",
+      "name": "定神斩·破定",
+      "desc": "定神斩不再造成定身，但是伤害翻倍",
+      "damageMulScale": 2,
+      "noRoot": 1
+    },
+    {
+      "id": "ding_shen_annihilate",
+      "name": "定神斩·神灭",
+      "desc": "定神斩宽度×2；定身怪每秒额外受到50%攻击伤害（与神伤加算）",
+      "rootDotAtkRatio": 0.5,
+      "widthScale": 2
+    },
+    {
+      "id": "pi_guang_replay",
+      "name": "劈光斩·重放",
+      "desc": "使用劈光斩时，连续释放两次",
+      "replayCount": 1
+    },
+    {
+      "id": "xue_guang_eternal",
+      "name": "血光四溅·永燃",
+      "desc": "伤害率加成仅60%生效，回血减半，但血光本关内持续无限",
+      "infiniteDuration": 1,
+      "dmgBonusFactor": 0.6,
+      "healTakenMul": 0.5
+    },
+    {
+      "id": "xue_guang_last_stand",
+      "name": "血光四溅·背水一战",
+      "desc": "相对满血每损失10%生命，伤害率+5%",
+      "lastStandDmgPerLost10": 0.05,
+      "lastStandHpStep": 0.1
+    },
+    {
+      "id": "xue_guang_blood_burst",
+      "name": "血光四溅·暴血",
+      "desc": "使用时消耗当前50%生命，伤害率翻倍",
+      "buffDmgBonusMul": 2,
+      "hpCostCurrentPct": 0.5
+    },
+    {
+      "id": "pi_guang_chain",
+      "name": "劈光斩·连斩",
+      "desc": "命中时30%再斩一次，可连锁",
+      "chainChance": 0.3
+    },
+    {
+      "id": "pi_guang_lifesteal",
+      "name": "劈光斩·嗜血",
+      "desc": "每命中一个敌人恢复3点生命",
+      "healPerHit": 3
+    },
+    {
+      "id": "pi_guang_crescent",
+      "name": "劈光斩·半月斩",
+      "desc": "变为面前180°扇形，攻击距离3倍",
+      "arcDegrees": 180,
+      "rangeMul": 3
+    },
+    {
+      "id": "pi_guang_blood_chain",
+      "name": "劈光斩·暴血连斩",
+      "desc": "血光持续期间连斩概率100%，每次连斩扣50血，直到生命低于10%",
+      "chainChanceBuff": 1,
+      "chainHpCost": 50,
+      "chainStopHpPct": 0.1
+    },
+    {
+      "id": "pi_guang_charged",
+      "name": "劈光斩·蓄力一击",
+      "desc": "取消普攻；每次释放后冷却1.5秒，冷却完站立蓄力（最高2倍/1.5秒自动放），移动释放当前蓄力或打出1倍",
+      "moveInterval": 1.5,
+      "maxChargeTime": 1.5,
+      "maxChargeMul": 2
+    },
+    {
+      "id": "melee_sword_qi",
+      "name": "普攻·剑气",
+      "desc": "普攻改为发射剑气（体型约玩家直径）；命中后对周围小范围（约玩家直径）造成伤害，命中首个敌人后消失",
+      "damageMul": 1,
+      "speed": 420,
+      "sizeMul": 1,
+      "splashMul": 1,
+      "splashDamageMul": 1,
+      "color": "#ffe08a"
+    },
+    {
+      "id": "melee_sword_qi_split",
+      "name": "普攻·剑气·分裂",
+      "desc": "剑气命中后分裂成3个更小的剑气，各造成大剑气50%伤害；齐备定神斩·神伤后可合成红词条「神伤散射」",
+      "splitCount": 3,
+      "splitDamageMul": 0.5,
+      "splitSpreadDeg": 28,
+      "splitSpeed": 380,
+      "splitSizeMul": 0.55
+    },
+    {
+      "id": "melee_sword_qi_pierce",
+      "name": "普攻·剑气·穿透",
+      "desc": "剑气造成伤害后不会消失，穿透过怪物，直到离开玩家视野后消失",
+      "pierce": 1
+    },
+    {
+      "id": "shen_shang_scatter",
+      "name": "神伤散射",
+      "desc": "红词条合成：定神斩停用；分裂剑气命中与溅射会造成定身并触发神伤DOT（与一剑定神互斥）"
+    },
+    {
+      "id": "shui_bo_zhan",
+      "name": "水波斩",
+      "desc": "红词条合成：劈光斩停用；剑气命中以剑气为中心触发劈光斩·再斩，享受劈光斩强化（与蓄力一击、半月斩互斥）"
+    },
+    {
+      "id": "aux_attract",
+      "name": "吸引",
+      "desc": "拾取范围 +30%",
+      "pickupRangeMul": 1.3
+    },
+    {
+      "id": "aux_repel",
+      "name": "排斥",
+      "desc": "受到伤害时弹开敌人的击退距离 +50%",
+      "knockDistMul": 1.5
+    },
+    {
+      "id": "melee_sword_qi_homing",
+      "name": "剑气·追影",
+      "desc": "合成：剑气在飞行方向±30°夹角内追踪最近敌人（需吸引、排斥、剑气）",
+      "trackConeDeg": 30,
+      "trackTurnDegPerSec": 220
+    }
+  ]
+}

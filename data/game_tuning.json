@@ -1,0 +1,27 @@
+{
+  "_说明": {
+    "用途": "手感/战斗通用调参。改完保存后刷新页面、重新开局即可生效。",
+    "字段": {
+      "bodyCollisionScale": "物理碰撞相对显示半径比例（小一圈，如0.78）",
+      "contactKnockDist": "贴身造成伤害后，怪击退总像素",
+      "contactKnockTime": "击退滑移时长（秒，越大越柔和）",
+      "replayGap": "劈光斩·重放/连斩的再斩间隔（秒）",
+      "chainMax": "连斩最大连锁次数",
+      "splitSpawnGuard": "分裂体出生无敌秒数（避免被击杀母体的同波范围伤秒清）",
+      "meleeRangeMul": "普通近战距离=角色半径×此值",
+      "meleeArcDegrees": "普通近战扇形总角度",
+      "meleeSwingLife": "普通近战挥砍特效时长（秒）"
+    }
+  },
+  "tuning": {
+    "bodyCollisionScale": 0.78,
+    "contactKnockDist": 50,
+    "contactKnockTime": 0.22,
+    "replayGap": 0.22,
+    "chainMax": 12,
+    "splitSpawnGuard": 0.35,
+    "meleeRangeMul": 4,
+    "meleeArcDegrees": 120,
+    "meleeSwingLife": 0.18
+  }
+}

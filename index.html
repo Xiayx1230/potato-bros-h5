@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#2a3d1c" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>破天肉鸽 · 公式幸存者</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=mobileweb" />
+</head>
+<body class="is-web">
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">破天肉鸽</div>
+      <div class="stats">
+        <span id="wave-text">1/10 破晓试炼</span>
+        <span id="time-text">45s</span>
+        <span id="kill-text">击杀 0</span>
+        <span id="gold-text" class="gold-chip">金币 0</span>
+        <span id="power-text" class="power">战力 0</span>
+        <button type="button" id="speed-btn" class="speed-btn" title="切换一倍/二倍速">×1</button>
+        <button type="button" id="pause-btn" class="speed-btn pause-btn" title="暂停 / 继续 (Esc)">‖</button>
+      </div>
+    </header>
+
+    <div class="stage">
+      <canvas id="game" width="960" height="640"></canvas>
+
+      <div id="overlay" class="overlay">
+        <div class="panel menu-panel">
+          <h1 id="overlay-title">破天肉鸽</h1>
+          <p id="overlay-desc" class="menu-tagline"></p>
+          <div id="overlay-actions" class="actions menu-actions"></div>
+          <p id="formula-hint" class="formula-hint">
+            伤害 = 基础伤害×技能倍率×暴击×增减伤×命中×格挡×攻速<br />
+            基础伤害 = 攻×(1−防×4/(攻+防×4))
+          </p>
+        </div>
+      </div>
+
+      <div id="upgrade-panel" class="upgrade-panel hidden">
+        <h2>升级！选一项强化</h2>
+        <div id="upgrade-cards" class="upgrade-cards"></div>
+      </div>
+    </div>
+
+    <footer class="hud">
+      <div class="bars">
+        <div class="hp-block">
+          <div class="label">生命 <span id="hp-text">1000 / 1000</span></div>
+          <div class="bar"><div id="hp-fill" class="fill hp"></div></div>
+        </div>
+        <div class="xp-block">
+          <div class="label"><span id="level-text">Lv.1</span> 经验</div>
+          <div class="bar"><div id="xp-fill" class="fill xp"></div></div>
+        </div>
+        <div id="skill-bar" class="skill-bar" aria-label="技能栏"></div>
+      </div>
+      <div id="joystick" class="joystick" aria-label="摇杆">
+        <div id="joy-knob" class="joy-knob"></div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="pause-panel" class="pause-panel hidden" aria-modal="true" role="dialog">
+    <div class="pause-card">
+      <h2>暂停</h2>
+      <p class="pause-hint">Esc / P / 再点暂停键 · 继续游戏</p>
+      <div id="pause-body" class="pause-body"></div>
+      <div class="actions">
+        <button type="button" id="pause-resume" class="btn primary">继续</button>
+        <button type="button" id="pause-to-title" class="btn">返回主菜单</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="codex-panel" class="codex-panel hidden" aria-modal="true" role="dialog">
+    <div class="codex-card">
+      <div class="codex-head">
+        <h2>图鉴</h2>
+        <button type="button" id="codex-close" class="btn">返回</button>
+      </div>
+      <div id="codex-tabs" class="codex-tabs" role="tablist"></div>
+      <div class="codex-main">
+        <div id="codex-list" class="codex-list" role="listbox"></div>
+        <div id="codex-detail" class="codex-detail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="shop-panel" class="codex-panel meta-panel hidden" aria-modal="true" role="dialog">
+    <div class="codex-card">
+      <div class="codex-head">
+        <h2>商城</h2>
+        <button type="button" id="shop-close" class="btn">返回</button>
+      </div>
+      <p class="meta-hint">局外养成 · 持有 <span id="shop-gold-text">金币 0</span> · 击杀获金，Boss 按剩余秒数结算</p>
+      <div class="codex-main">
+        <div id="shop-list" class="codex-list" role="listbox"></div>
+        <div id="shop-detail" class="codex-detail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="attrs-panel" class="codex-panel meta-panel hidden" aria-modal="true" role="dialog">
+    <div class="codex-card attrs-card">
+      <div class="codex-head">
+        <h2>角色</h2>
+        <button type="button" id="attrs-close" class="btn">返回</button>
+      </div>
+      <p class="meta-hint">局外面板 = 角色表基础 + 商城养成</p>
+      <div id="attrs-body" class="attrs-body"></div>
+      <p class="meta-foot">金色小数为商城养成加成</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/game.js?v=mobileweb"></script>
+</body>
+</html>

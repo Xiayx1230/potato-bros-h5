@@ -1,0 +1,813 @@
+{
+  "_说明": {
+    "用途": "升级三选一 Buff 表。从池中按 weight 抽取；稀有度越高权重越低（见 rarityFrames）。",
+    "字段": {
+      "pickCount": "每次弹出选项数量（默认3）",
+      "id": "唯一 ID",
+      "name": "显示名",
+      "desc": "描述",
+      "weight": "抽取权重（越大越容易抽到）",
+      "rarity": "稀有度：0普通 1稀有(金框) 2传说(红框，三合一等)；对应 rarityFrames 的框色与权重",
+      "frame": "可选，强制框色：gold / red；不填则按 rarityFrames[rarity].frame",
+      "rare": "旧字段：true 等同 rarity=1；新表请用 rarity",
+      "effects": "效果列表",
+      "effects[].stat": "属性名：atk/def/maxHp/hp/atkSpeed/moveSpeed/skillMul/excellent/lucky/ty2/ty3/ty4/physDmg/pveDmg/dmgRate/hitRate/dodgeRate/blockRate/blockValue/pickupRange 等",
+      "effects[].add": "加算值",
+      "effects[].max": "加成后上限（可选，如格挡值）",
+      "effects[].alsoHeal": "改 maxHp 时是否同步回复等量生命",
+      "effects[].addMaxHpPercent": "按最大生命百分比回复当前生命（如 0.35）",
+      "unique": "是否本局只可选一次（技能强化建议 true）",
+      "skillEnhance": "引用 skill_enhances 表的 id；参数在 skill_enhances.json 配置",
+      "uid": "数字ID（唯一，供前置/冲突引用）",
+      "requireUid": "前置：需已选中该 uid（可逗号多个）；技能变体需先习得对应基础技能",
+      "conflictUids": "互斥对方 uid（逗号分隔）；选中后双方都不再出现",
+      "requireUids": "多前置时用数组；与 requireUid 二选一即可",
+      "unlockSkill": "习得基础技能：填 skills.json 的 id；选中后加入技能栏",
+      "firstPick": "true=进入「首次升级必定三选一」池（与 unlockSkill 无关；如习得/剑气）。首次升级只从该池抽，选过后本局不再强制",
+      "rarityFrames": "稀有度→框色与权重：frame=gold/red，weightMul=抽取权重倍率"
+    }
+  },
+  "pickCount": 3,
+  "rareWeightMul": 0.45,
+  "rarity2WeightMul": 0.28,
+  "comboReadyWeightMul": 8,
+  "rarityFrames": {
+    "0": {
+      "frame": "",
+      "weightMul": 1
+    },
+    "1": {
+      "frame": "gold",
+      "weightMul": 0.45
+    },
+    "2": {
+      "frame": "red",
+      "weightMul": 0.28
+    }
+  },
+  "upgrades": [
+    {
+      "uid": 1,
+      "id": "atk",
+      "name": "锋刃",
+      "desc": "攻击 +4",
+      "requireUid": 0,
+      "weight": 10,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "atk",
+          "add": 4
+        }
+      ]
+    },
+    {
+      "uid": 2,
+      "id": "atk2",
+      "name": "重砍",
+      "desc": "攻击 +8",
+      "requireUid": 0,
+      "weight": 5,
+      "rarity": 1,
+      "rare": true,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "atk",
+          "add": 8
+        }
+      ]
+    },
+    {
+      "uid": 3,
+      "id": "def",
+      "name": "硬皮",
+      "desc": "防御 +4",
+      "requireUid": 0,
+      "weight": 5,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "def",
+          "add": 4
+        }
+      ]
+    },
+    {
+      "uid": 4,
+      "id": "hp",
+      "name": "固本",
+      "desc": "最大生命 +200 并回复",
+      "requireUid": 0,
+      "weight": 10,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "maxHp",
+          "add": 200,
+          "alsoHeal": true
+        }
+      ]
+    },
+    {
+      "uid": 5,
+      "id": "spd",
+      "name": "疾步",
+      "desc": "移速 +20，攻速 +0.08",
+      "requireUid": 0,
+      "weight": 5,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "moveSpeed",
+          "add": 20
+        },
+        {
+          "stat": "atkSpeed",
+          "add": 0.08
+        }
+      ]
+    },
+    {
+      "uid": 6,
+      "id": "as",
+      "name": "连砍",
+      "desc": "攻速 +0.15",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "atkSpeed",
+          "add": 0.15
+        }
+      ]
+    },
+    {
+      "uid": 7,
+      "id": "skill",
+      "name": "熟手",
+      "desc": "技能倍率 +0.25",
+      "requireUid": 0,
+      "weight": 0,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "skillMul",
+          "add": 0.25
+        }
+      ]
+    },
+    {
+      "uid": 8,
+      "id": "exc",
+      "name": "卓越",
+      "desc": "卓越一击 +8%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "excellent",
+          "add": 0.08
+        }
+      ]
+    },
+    {
+      "uid": 9,
+      "id": "lucky",
+      "name": "幸运",
+      "desc": "幸运一击 +6%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "lucky",
+          "add": 0.06
+        }
+      ]
+    },
+    {
+      "uid": 10,
+      "id": "ty2",
+      "name": "天运×2",
+      "desc": "2倍天运 +5%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "ty2",
+          "add": 0.05
+        }
+      ]
+    },
+    {
+      "uid": 11,
+      "id": "ty3",
+      "name": "天运×3",
+      "desc": "3倍天运 +3%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 1,
+      "rare": true,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "ty3",
+          "add": 0.03
+        }
+      ]
+    },
+    {
+      "uid": 12,
+      "id": "ty4",
+      "name": "天运×4",
+      "desc": "4倍天运 +2%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 1,
+      "rare": true,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "ty4",
+          "add": 0.02
+        }
+      ]
+    },
+    {
+      "uid": 13,
+      "id": "phys",
+      "name": "破甲",
+      "desc": "物理伤害 +12%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "physDmg",
+          "add": 0.12
+        }
+      ]
+    },
+    {
+      "uid": 14,
+      "id": "pve",
+      "name": "猎手",
+      "desc": "PVE增伤 +12%",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "pveDmg",
+          "add": 0.12
+        }
+      ]
+    },
+    {
+      "uid": 15,
+      "id": "dmgr",
+      "name": "狂怒",
+      "desc": "伤害率 +10%",
+      "requireUid": 0,
+      "weight": 0,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "dmgRate",
+          "add": 0.1
+        }
+      ]
+    },
+    {
+      "uid": 16,
+      "id": "hit",
+      "name": "准星",
+      "desc": "命中率 +6%",
+      "requireUid": 0,
+      "weight": 0,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "hitRate",
+          "add": 0.06
+        }
+      ]
+    },
+    {
+      "uid": 17,
+      "id": "dodge",
+      "name": "闪身",
+      "desc": "闪避 +5%",
+      "requireUid": 0,
+      "weight": 0,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "dodgeRate",
+          "add": 0.05
+        }
+      ]
+    },
+    {
+      "uid": 18,
+      "id": "block",
+      "name": "盾皮",
+      "desc": "格挡率 +6%，格挡值 +5%",
+      "requireUid": 0,
+      "weight": 0,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "blockRate",
+          "add": 0.06
+        },
+        {
+          "stat": "blockValue",
+          "add": 0.05,
+          "max": 0.7
+        }
+      ]
+    },
+    {
+      "uid": 19,
+      "id": "pickup",
+      "name": "磁吸",
+      "desc": "拾取范围 +40",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "pickupRange",
+          "add": 40
+        }
+      ]
+    },
+    {
+      "uid": 20,
+      "id": "heal",
+      "name": "回春",
+      "desc": "立刻回复 35% 生命",
+      "requireUid": 0,
+      "weight": 1,
+      "rarity": 0,
+      "rare": false,
+      "unique": false,
+      "effects": [
+        {
+          "stat": "hp",
+          "addMaxHpPercent": 0.35
+        }
+      ]
+    },
+    {
+      "uid": 21,
+      "id": "sk_xue_guang_burn",
+      "name": "血光四溅·燃血重生",
+      "desc": "伤害率额外+20%；持续期间每秒 -当前6%生命，并 +已损4%生命",
+      "requireUid": 35,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "xue_guang_burn"
+    },
+    {
+      "uid": 22,
+      "id": "sk_xue_guang_eternal",
+      "name": "血光四溅·永燃",
+      "desc": "伤害率-20%，但血光本关内持续无限",
+      "requireUid": 35,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        24
+      ],
+      "skillEnhance": "xue_guang_eternal"
+    },
+    {
+      "uid": 23,
+      "id": "sk_xue_guang_last_stand",
+      "name": "血光四溅·背水一战",
+      "desc": "相对满血每损失10%生命，伤害率+5%",
+      "requireUid": 35,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "xue_guang_last_stand"
+    },
+    {
+      "uid": 24,
+      "id": "sk_xue_guang_blood_burst",
+      "name": "血光四溅·暴血",
+      "desc": "使用时消耗当前50%生命，伤害率翻倍",
+      "requireUid": 35,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        22
+      ],
+      "skillEnhance": "xue_guang_blood_burst"
+    },
+    {
+      "uid": 25,
+      "id": "sk_ding_shen_focus",
+      "name": "定神斩·一剑定神",
+      "desc": "定神斩技能倍率+50%，范围扩大到原来的两倍（与神伤散射互斥）",
+      "requireUid": 34,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        42
+      ],
+      "skillEnhance": "ding_shen_focus"
+    },
+    {
+      "uid": 26,
+      "id": "sk_ding_shen_dot",
+      "name": "定神斩·神伤",
+      "desc": "被定身怪每秒受到攻击×50%伤害。齐备剑气·分裂后可合成红词条「神伤散射」",
+      "requireUid": 34,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        28
+      ],
+      "skillEnhance": "ding_shen_dot"
+    },
+    {
+      "uid": 27,
+      "id": "sk_ding_shen_long_root",
+      "name": "定神斩·久定",
+      "desc": "定神斩的定身效果延长至5秒",
+      "requireUid": 34,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        28
+      ],
+      "skillEnhance": "ding_shen_long_root"
+    },
+    {
+      "uid": 28,
+      "id": "sk_ding_shen_break",
+      "name": "定神斩·破定",
+      "desc": "定神斩不再造成定身，但是伤害翻倍",
+      "requireUid": 34,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        26,
+        27
+      ],
+      "skillEnhance": "ding_shen_break"
+    },
+    {
+      "uid": 29,
+      "id": "sk_pi_guang_replay",
+      "name": "劈光斩·重放",
+      "desc": "使用劈光斩时，连续释放两次。齐备剑气·穿透后可合成红词条「水波斩」",
+      "requireUid": 36,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "pi_guang_replay"
+    },
+    {
+      "uid": 30,
+      "id": "sk_pi_guang_chain",
+      "name": "劈光斩·连斩",
+      "desc": "命中时30%再斩一次，可连锁",
+      "requireUid": 36,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "pi_guang_chain"
+    },
+    {
+      "uid": 31,
+      "id": "sk_pi_guang_lifesteal",
+      "name": "劈光斩·嗜血",
+      "desc": "每命中一个敌人恢复3点生命",
+      "requireUid": 36,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "pi_guang_lifesteal"
+    },
+    {
+      "uid": 32,
+      "id": "sk_pi_guang_crescent",
+      "name": "劈光斩·半月斩",
+      "desc": "变为面前180°扇形，攻击距离3倍（与蓄力一击、水波斩互斥）",
+      "requireUid": 36,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        38,
+        43
+      ],
+      "skillEnhance": "pi_guang_crescent"
+    },
+    {
+      "uid": 33,
+      "id": "sk_pi_guang_blood_chain",
+      "name": "劈光斩·暴血连斩",
+      "desc": "血光持续期间连斩概率100%，每次连斩扣50血，直到生命低于10%",
+      "requireUid": 0,
+      "weight": 15,
+      "rarity": 2,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "requireUids": [
+        24,
+        30,
+        31
+      ],
+      "skillEnhance": "pi_guang_blood_chain"
+    },
+    {
+      "uid": 34,
+      "id": "learn_ding_shen_zhan",
+      "name": "习得·定神斩",
+      "desc": "学会定神斩：面前矩形斩击并定身",
+      "requireUid": 0,
+      "weight": 22,
+      "rarity": 0,
+      "rare": false,
+      "unique": true,
+      "firstPick": true,
+      "effects": [],
+      "unlockSkill": "ding_shen_zhan"
+    },
+    {
+      "uid": 35,
+      "id": "learn_xue_guang",
+      "name": "习得·血光四溅",
+      "desc": "学会血光四溅：短时间提升伤害率",
+      "requireUid": 0,
+      "weight": 22,
+      "rarity": 0,
+      "rare": false,
+      "unique": true,
+      "firstPick": true,
+      "effects": [],
+      "unlockSkill": "xue_guang"
+    },
+    {
+      "uid": 36,
+      "id": "learn_pi_guang_zhan",
+      "name": "习得·劈光斩",
+      "desc": "学会劈光斩：周围圆形斩击",
+      "requireUid": 0,
+      "weight": 22,
+      "rarity": 0,
+      "rare": false,
+      "unique": true,
+      "firstPick": true,
+      "effects": [],
+      "unlockSkill": "pi_guang_zhan"
+    },
+    {
+      "uid": 37,
+      "id": "sk_ding_shen_annihilate",
+      "name": "定神斩·神灭",
+      "desc": "定神斩宽度×2；定身怪每秒额外受到50%攻击伤害（与神伤加算）",
+      "requireUid": 0,
+      "weight": 6,
+      "rarity": 2,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "requireUids": [
+        25,
+        26,
+        27
+      ],
+      "skillEnhance": "ding_shen_annihilate"
+    },
+    {
+      "uid": 38,
+      "id": "sk_pi_guang_charged",
+      "name": "劈光斩·蓄力一击",
+      "desc": "取消普通攻击；每次劈光斩后冷却1.5秒，冷却完成站立自动蓄力，伤害与范围随蓄力提升，最高2倍，蓄满1.5秒自动释放；冷却完成时移动则立即斩击（与半月斩、剑气、水波斩互斥）",
+      "requireUid": 36,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        32,
+        39,
+        43
+      ],
+      "skillEnhance": "pi_guang_charged"
+    },
+    {
+      "uid": 39,
+      "id": "sk_melee_sword_qi",
+      "name": "普攻·剑气",
+      "desc": "普通攻击改为发射剑气（体型约玩家直径）；命中后对周围约玩家直径范围造成伤害，碰到第一个怪物后消失。齐备吸引·排斥后可合成「剑气·追影」",
+      "requireUid": 0,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "firstPick": true,
+      "effects": [],
+      "conflictUids": [
+        38
+      ],
+      "skillEnhance": "melee_sword_qi"
+    },
+    {
+      "uid": 40,
+      "id": "sk_melee_sword_qi_split",
+      "name": "普攻·剑气·分裂",
+      "desc": "剑气命中后分裂成3个小剑气（各50%伤害）。齐备定神斩·神伤后可合成红词条「神伤散射」",
+      "requireUid": 39,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        41
+      ],
+      "skillEnhance": "melee_sword_qi_split"
+    },
+    {
+      "uid": 42,
+      "id": "sk_shen_shang_scatter",
+      "name": "神伤散射",
+      "desc": "合成：定神斩停用；分裂剑气命中/溅射会造成定身并触发神伤DOT（与一剑定神互斥）",
+      "requireUid": 0,
+      "weight": 6,
+      "rarity": 2,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "requireUids": [
+        39,
+        40,
+        34,
+        26
+      ],
+      "conflictUids": [
+        25
+      ],
+      "skillEnhance": "shen_shang_scatter"
+    },
+    {
+      "uid": 41,
+      "id": "sk_melee_sword_qi_pierce",
+      "name": "普攻·剑气·穿透",
+      "desc": "剑气造成伤害后不会消失，穿透过怪物，直到离开玩家视野后消失。齐备劈光斩·重放后可合成红词条「水波斩」",
+      "requireUid": 39,
+      "weight": 15,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "conflictUids": [
+        40
+      ],
+      "skillEnhance": "melee_sword_qi_pierce"
+    },
+    {
+      "uid": 43,
+      "id": "sk_shui_bo_zhan",
+      "name": "水波斩",
+      "desc": "合成：劈光斩停用；剑气（含穿透）命中时以剑气为中心触发劈光斩·再斩，享受劈光斩强化（与蓄力一击、半月斩互斥）",
+      "requireUid": 0,
+      "weight": 6,
+      "rarity": 2,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "requireUids": [
+        39,
+        41,
+        36,
+        29
+      ],
+      "conflictUids": [
+        32,
+        38
+      ],
+      "skillEnhance": "shui_bo_zhan"
+    },
+    {
+      "uid": 44,
+      "id": "sk_aux_attract",
+      "name": "吸引",
+      "desc": "拾取范围 +30%。与排斥、剑气齐备后可合成「剑气·追影」",
+      "requireUid": 0,
+      "weight": 18,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "aux_attract"
+    },
+    {
+      "uid": 45,
+      "id": "sk_aux_repel",
+      "name": "排斥",
+      "desc": "受到伤害时，弹开敌人的击退距离 +50%。与吸引、剑气齐备后可合成「剑气·追影」",
+      "requireUid": 0,
+      "weight": 18,
+      "rarity": 1,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "skillEnhance": "aux_repel"
+    },
+    {
+      "uid": 46,
+      "id": "sk_melee_sword_qi_homing",
+      "name": "剑气·追影",
+      "desc": "合成：剑气沿飞行方向在±30°夹角内追踪最近敌人",
+      "requireUid": 0,
+      "weight": 20,
+      "rarity": 2,
+      "rare": true,
+      "unique": true,
+      "effects": [],
+      "requireUids": [
+        44,
+        45,
+        39
+      ],
+      "skillEnhance": "melee_sword_qi_homing"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# local / build
+release/
+配表/
+tools/__pycache__/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log
+_*.py
+_*.txt
+
+# office drafts (keep markdown)
+*.docx
+*.doc
+
+# editor
+.idea/
+.vscode/
+*.canvas.tsx

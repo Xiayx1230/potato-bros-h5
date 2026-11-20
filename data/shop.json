@@ -1,0 +1,96 @@
+{
+  "_说明": {
+    "用途": "局外商城商品表。price 为空表示暂无售价（界面显示「—」，不可购买）。",
+    "字段": {
+      "id": "商品唯一ID",
+      "name": "显示名",
+      "desc": "说明文案",
+      "kind": "stat=属性强化；boon=一次性局外特权",
+      "effect": "boon 效果：start_pick=开局三选一；revive=每局复活一次",
+      "stat": "kind=stat 时提升的属性字段",
+      "addPerLevel": "每级增加量（比率类用小数，如0.02）",
+      "maxLevel": "可购买上限等级（一次性商品一般为1）",
+      "price": "售价金币；空/不填=暂未开放"
+    }
+  },
+  "items": [
+    {
+      "id": "boon_start_pick",
+      "name": "开局三选一",
+      "desc": "每局开始时额外进行一次升级强化三选一（永久生效；与首次升级相同，只出习得/剑气等开局池）",
+      "kind": "boon",
+      "effect": "start_pick",
+      "maxLevel": 1,
+      "price": 1000
+    },
+    {
+      "id": "boon_revive",
+      "name": "复活一次",
+      "desc": "每局倒下时可满血复活一次（首领限时失败除外；永久生效）",
+      "kind": "boon",
+      "effect": "revive",
+      "maxLevel": 1,
+      "price": 1000
+    },
+    {
+      "id": "meta_atk",
+      "name": "攻击强化",
+      "desc": "永久提升基础攻击力",
+      "kind": "stat",
+      "stat": "atk",
+      "addPerLevel": 2,
+      "maxLevel": 20,
+      "price": 100
+    },
+    {
+      "id": "meta_hp",
+      "name": "生命强化",
+      "desc": "永久提升最大生命",
+      "kind": "stat",
+      "stat": "hp",
+      "addPerLevel": 50,
+      "maxLevel": 20,
+      "price": 100
+    },
+    {
+      "id": "meta_move",
+      "name": "移速强化",
+      "desc": "永久提升移动速度",
+      "kind": "stat",
+      "stat": "moveSpeed",
+      "addPerLevel": 8,
+      "maxLevel": 15,
+      "price": 100
+    },
+    {
+      "id": "meta_atk_speed",
+      "name": "攻速强化",
+      "desc": "永久提升攻击速度",
+      "kind": "stat",
+      "stat": "atkSpeed",
+      "addPerLevel": 0.05,
+      "maxLevel": 15,
+      "price": 100
+    },
+    {
+      "id": "meta_pickup",
+      "name": "拾取范围",
+      "desc": "永久扩大经验球吸附范围",
+      "kind": "stat",
+      "stat": "pickupRange",
+      "addPerLevel": 10,
+      "maxLevel": 10,
+      "price": 100
+    },
+    {
+      "id": "meta_dmg_rate",
+      "name": "伤害率",
+      "desc": "永久提升伤害率",
+      "kind": "stat",
+      "stat": "dmgRate",
+      "addPerLevel": 0.02,
+      "maxLevel": 20,
+      "price": 100
+    }
+  ]
+}
