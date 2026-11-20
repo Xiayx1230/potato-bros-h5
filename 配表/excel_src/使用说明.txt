@@ -1,0 +1,7 @@
+在这里修改分表 Excel，然后回到上一级双击 convert.bat。
+
+Excel 为 DataTable/Luban 格式（https://www.datable.cn/docs/manual/excel）：
+  第1行 ##var = 字段名
+  第2行 ##type = 类型
+  第3行 ## = 中文注释
+  第4行起 = 数据（A 列留空）

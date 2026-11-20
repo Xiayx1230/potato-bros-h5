@@ -1,0 +1,65 @@
+破天肉鸽 · 配表文件夹
+====================
+
+本文件夹装了配置相关的全部东西，游戏读的是上级 data\（需手动拷过去）。
+
+Excel 格式遵循 DataTable / Luban 初级规范：
+  https://www.datable.cn/docs/manual/excel
+
+目录
+----
+  excel_src\     放 / 修改 分表 Excel
+  json_out\      转换后的程序可读 JSON（检查区）
+  convert.bat    转换：excel_src → json_out
+  init_excel.bat 首次：从游戏 data 生成 Excel 模板
+  config_convert.py
+  requirements.txt
+
+推荐流程
+--------
+  1. 首次：双击 init_excel.bat（会按 Luban 格式生成/覆盖 excel_src）
+  2. 用 Excel / WPS 修改 excel_src 里某一个表
+  3. 双击 convert.bat
+  4. 打开 json_out，检查生成结果
+  5. 把改过的 .json 复制到上级目录的 data\
+  6. 刷新游戏网页，重新开局
+
+Excel 标题头（Luban）
+--------------------
+  A 列是行标记，真正字段从 B 列开始：
+
+  第1行 A1=##var    → 字段名（给程序用）
+  第2行 A1=##type   → 类型（int / float / string / bool / int? 等）
+  第3行 A1=##       → 中文注释（不参与导出）
+  第4行起           → 数据；A 列留空
+                      若某数据行 A 列以 ## 开头，整行当作注释忽略
+
+  规则要点：
+  - A1 必须以 ## 开头，否则该 sheet 会被视为非数据表而忽略
+  - 字段名为空或以 # 开头的列 = 注释列，不导出
+  - 可空类型用 int? / float? / string?；单元格留空表示 null
+  - bool 可填 true/false/1/0/是/否
+
+  示例：
+    ##var  | id           | name     | price
+    ##type | string       | string   | int?
+    ##     | 商品唯一ID    | 显示名    | 售价；空=未开放
+           | boon_revive  | 复活一次  | 60
+
+分表对应
+--------
+  player.xlsx         → player.json
+  player_levels.xlsx  → player_levels.json
+  monsters.xlsx       → monsters.json（分阶段怪：原id_e1/m1/e2/l2 = 初/中/盛/极；Boss 原id）
+  levels.xlsx         → levels.json（关卡1–20；statScale 建议=1；level_spawns 填阶段怪id）
+  skills.xlsx         → skills.json
+  upgrades.xlsx       → upgrades.json（池子：出现条件/权重；skillEnhance 只填强化ID）
+  skill_enhances.xlsx → skill_enhances.json（强化参数：倍率、定身、燃血、蓄力一击等）
+  game_tuning.xlsx    → game_tuning.json（手感：击退、碰撞比例、普攻扇形、再斩间隔等）
+  shop.xlsx           → shop.json（局外商城；kind=stat/boon；price 空=暂无售价；boon: start_pick/revive）
+
+说明：改技能变体数值请改 skill_enhances；改是否能抽到、前置/冲突请改 upgrades；改击退/碰撞手感请改 game_tuning；改局外商品请改 shop。
+
+只转一张（命令行）
+----------------
+  python config_convert.py convert --only monsters
